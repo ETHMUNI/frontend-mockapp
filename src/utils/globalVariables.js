@@ -1,0 +1,1 @@
+export const BASE_URL_DEV = "htto://165.227.131.232:7000/api"
