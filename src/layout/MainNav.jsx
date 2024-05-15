@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
 
 const MainNav = ({currentUser}) => {
   useEffect(() => {
@@ -13,10 +14,10 @@ const MainNav = ({currentUser}) => {
         <li><NavLink to="/auth-entities">Authenticated Entities</NavLink></li>
         {currentUser && <li>{currentUser.username}</li>}
         <li>
-        {currentUser.username !== null ? <NavLink to="logout">Logout</NavLink> : <NavLink to="login">Login</NavLink>}
+        {currentUser && currentUser.username !== null ? <NavLink to="logout">Logout</NavLink> : <NavLink to="login">Login</NavLink>}
         </li>
       </ul>
     )
-  }
+}
 
 export default MainNav;

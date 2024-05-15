@@ -1,11 +1,12 @@
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Outlet, useParams, useNavigate, Navigate, NavLink } from 'react-router-dom'
 import Applayout from './layout/AppLayout.jsx'
 import Home from './page/Home.jsx'
 import About from './page/About.jsx'
 import Services from './page/Services.jsx'
 import PageNotFound from './page/PageNotFound.jsx'
-
-
+import { Login } from './page/Login.jsx';
+import { Logout } from './page/Logout.jsx'
 function App() {
 
   const [currentUser, setCurrentUser] = useState({token: null, username: null});
@@ -36,7 +37,7 @@ function App() {
     <BrowserRouter >
       <Routes>
       <Route element={<Applayout/>}>
-      <Route index element={<Navigate to="home"/>}/>
+      <Route index element={<Navigate to="login"/>}/>
         <Route path="home" element={<Home/>}/>
         <Route path="/about" element={<About/>}/>
         <Route path="/services" element={<Services/>}/>

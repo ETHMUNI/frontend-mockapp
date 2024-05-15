@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
-import { login, register } from "../services/apiFacade.js";
+import { login, register } from "/src/apiFacade.js";
 import styled from "styled-components";
 
 
@@ -22,17 +22,17 @@ const StyledForm = styled.form`
     align-items: center;
     width: 100%;
     max-width: 300px;
-    border: 0.2rem solid var(--color-sky-400);
+    border: 0.2rem solid var(--color-blue-500);
     padding: 4rem;
     border-radius: 1rem;
-    box-shadow: 0 0 5px 0 var(--color-sky-400);
-    background-color: var(--color-sky-200);
+    box-shadow: 8px 8px 0 0 var(--color-slate-100);
+    background-color: var(--color-blue-500);
     label {
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
         font-size: 1.5rem;
-        color: var(--color-sky-800);
+        color: white;
     }
     input {
         font-size: 1.3rem;
@@ -44,12 +44,12 @@ const StyledForm = styled.form`
         font-size: 1.5rem;
         padding: 0.5rem;
         border-radius: 0.5rem;
-        background-color: var(--color-sky-800);
-        color: white;
-        border: none;
+        background-color: white;
+        color: black;
+        border: 3px solid var( --color-slate-500);
         cursor: pointer;
         &:hover {
-            background-color: var(--color-sky-600);
+            background-color: var( --color-slate-500);
         }
     }
 `
@@ -97,12 +97,20 @@ export const Login = ({setCurrentUser, currentUser}) => {
     }
 
     const attemptLogin = async () => {
+        if (user.username === "" || user.password === "") {
+            setError("Username and password cannot be empty");
+            return;  // Prevent further execution if validation fails
+        }
         try {
-            if(user.username === "" || user.password === "") throw new Error("Username and password cannot be empty");
-            await login(user.username, user.password, (data) => setCurrentUser(data));
-            setUser({username: "", password: ""})
-            navigate("/home");
-        }catch(err){
+            await login(user.username, user.password, (data) => {
+                if (data && data.token) {  // Assuming 'data.token' is your criteria for a successful login
+                    setCurrentUser(data);
+                    navigate("/home");  // Navigate only if login is successful
+                } else {
+                    throw new Error("Invalid username or password");  // Handle no token or invalid login
+                }
+            });
+        } catch(err) {
             setError(err.message);
             console.log(err);
         }

@@ -1,9 +1,9 @@
-import {BASE_URL} from "../utils/globalVariables.js"
+import {BASE_URL_DEV} from "./utils/globalVariables.js"
 
 
 export const login = async (username, password, callback) => {
     try{
-        const response = await fetch(`${BASE_URL}/auth/login`, {
+        const response = await fetch(`${BASE_URL_DEV}/auth/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -24,7 +24,7 @@ export const login = async (username, password, callback) => {
 
 export const register = async (username, password, callback) => {
     try{
-        const response = await fetch(`${BASE_URL}/auth/register`, {
+        const response = await fetch(`${BASE_URL_DEV}/auth/register`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
